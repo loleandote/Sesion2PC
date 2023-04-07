@@ -32,8 +32,8 @@ struct TProcess_t *g_process_lineas_table;
 int main(int argc, char *argv[])
 {
     // Define variables locales
-    int numTelefonos;
-    int numLineas;
+    int numTelefonos=4;
+    int numLineas=10;
 
     // Procesa los argumentos y los guarda en las dos variables
     procesar_argumentos(argc, argv, &numTelefonos, &numLineas);
@@ -93,15 +93,15 @@ void manejador_senhal(int sign)
 
 void iniciar_tabla_procesos(int n_procesos_telefono, int n_procesos_linea)
 {
-    g_process_lineas_table = malloc(n_procesos_linea * sizeof(TProcess_t));
-    g_process_telefonos_table = malloc(n_procesos_telefono * sizeof(TProcess_t));
+    g_process_lineas_table = malloc(n_procesos_linea * sizeof(struct TProcess_t));
+    g_process_telefonos_table = malloc(n_procesos_telefono * sizeof(struct TProcess_t));
     for (int i = 0; i < n_procesos_telefono; i++)
     {
-        g_process_telefonos_table[i] = 0;
+        g_process_telefonos_table[i].pid = 0;
     }
     for (int i = 0; i < n_procesos_linea; i++)
     {
-        g_process_lineas_table[i] = 0;
+        g_process_lineas_table[i].pid = 0;
     }
 }
 
@@ -190,10 +190,10 @@ void esperar_procesos()
 
 void terminar_procesos_especificos(struct TProcess_t *process_table, int process_num)
 {
-    printf("[MANAGER] Terminando proceso %s [%d]...\n", process_table[process_num].clase, process_table[i].pid);
+    printf("[MANAGER] Terminando proceso %s [%d]...\n", process_table[process_num].clase, process_table[process_num].pid);
     if (kill(process_table[process_num].pid, SIGINT) == -1)
     {
-        fprintf(stderr, "[MANAGER] Error al usar kill() en proceso %d: %s.\n", process_table[i].pid, strerror(errno));
+        fprintf(stderr, "[MANAGER] Error al usar kill() en proceso %d: %s.\n", process_table[process_num].pid, strerror(errno));
     }
     else
         process_table[process_num].pid = 0;
@@ -203,7 +203,7 @@ void terminar_procesos()
 {
     int i;
     printf("\n--- Finalizando procesos ---\n");
-    for (i = 0; i < g_process_lineas_table; i++)
+    for (i = 0; i < g_lineasProcesses; i++)
     {
         if (g_process_lineas_table[i].pid != 0)
         {

@@ -12,7 +12,7 @@ int main(int argc,char *argv[]){
 
 	//TODO: Esquema especificado en la práctica.
 	pid_t pid = getpid();
-	int valorEspera= obtener_var("oalkd");
+	int valorEspera= obtener_var(LLAMADASESPERA);
     // Coge semáforos y memoria compartida
 
 

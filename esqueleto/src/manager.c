@@ -70,6 +70,8 @@ int main(int argc, char *argv[])
 // TODO: Realizar todas las funciones necesarias.
 void procesar_argumentos(int argc, char *argv[], int *numTelefonos, int *numLineas)
 {
+    g_lineasProcesses = *numLineas;
+    g_telefonosProcesses = *numTelefonos;
 }
 
 void instalar_manejador_senhal()
@@ -105,15 +107,14 @@ void iniciar_tabla_procesos(int n_procesos_telefono, int n_procesos_linea)
 
 void crear_procesos(int numTelefonos, int numLineas)
 {
-    int indice_tabla = 0;
     for (int i = 0; i < numTelefonos; i++)
     {
-        lanzar_proceso_telefono(indice_tabla++);
+        lanzar_proceso_telefono(i);
     }
     printf("[MANAGER] %d teléfonos creadas.\n", numTelefonos);
     for (int i = 0; i < numLineas; i++)
     {
-        lanzar_proceso_linea(indice_tabla++);
+        lanzar_proceso_linea(i);
     }
     printf("[MANAGER] %d lineas creadas.\n", numLineas);
 }
@@ -181,30 +182,21 @@ void esperar_procesos()
             }
         }
     }
-    n_processes = g_telefonosProcesses;
-    while (n_processes > 0)
+    for (int i = 0; i < g_telefonosProcesses; i++)
     {
-        pid = wait(NULL);
-        for (i = 0; i < g_telefonosProcesses; i++)
-        {
-            if (pid == g_telefonosProcesses[i].pid)
-            {
-                printf("[MANAGER] Proceso teléfono terminado [%d]...\n", g_process_telefonos_table[i].pid);
-                g_process_telefonos_table[i].pid = 0;
-                n_processes--;
-                break;
-            }
-        }
+        terminar_procesos_especificos(&g_process_telefonos_table[i], 0);
     }
 }
 
 void terminar_procesos_especificos(struct TProcess_t *process_table, int process_num)
 {
-    printf("[MANAGER] Terminando proceso %s [%d]...\n", process_table[i].clase, process_table[i].pid);
-    if (kill(process_table[i].pid, SIGINT) == -1)
+    printf("[MANAGER] Terminando proceso %s [%d]...\n", process_table[process_num].clase, process_table[i].pid);
+    if (kill(process_table[process_num].pid, SIGINT) == -1)
     {
         fprintf(stderr, "[MANAGER] Error al usar kill() en proceso %d: %s.\n", process_table[i].pid, strerror(errno));
     }
+    else
+        process_table[process_num].pid = 0;
 }
 
 void terminar_procesos()
@@ -222,7 +214,7 @@ void terminar_procesos()
             }
         }
     }
-     for (i = 0; i < g_telefonosProcesses; i++)
+    for (i = 0; i < g_telefonosProcesses; i++)
     {
         if (g_process_telefonos_table[i].pid != 0)
         {

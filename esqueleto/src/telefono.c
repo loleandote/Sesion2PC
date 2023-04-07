@@ -15,7 +15,7 @@ int main(int argc,char *argv[]){
 
     // Define variables locales
     pid_t pid = getpid();
-	int valorEspera= obtener_var("oalkd");
+	int valorEspera= obtener_var(LLAMADASESPERA);
 
     // Coge semáforos y memoria compartida
 

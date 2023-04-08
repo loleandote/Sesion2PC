@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "memoriai.h": "c",
+        "definitions.h": "c",
+        "semaforoi.h": "c"
+    }
+}

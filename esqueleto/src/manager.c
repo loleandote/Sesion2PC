@@ -32,7 +32,7 @@ struct TProcess_t *g_process_lineas_table;
 int main(int argc, char *argv[])
 {
     // Define variables locales
-    int numTelefonos=4;
+    int numTelefonos=3;
     int numLineas=10;
 
     // Procesa los argumentos y los guarda en las dos variables
@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
     crear_sem(TELEFONOS, 0);
     crear_sem(LINEAS, 0);
     crear_var(LLAMADASESPERA, 0); // No hay llamadas en espera
-
     // Manejador de Ctrl-C
     instalar_manejador_senhal();
 
@@ -58,7 +57,7 @@ int main(int argc, char *argv[])
     esperar_procesos();
 
     // Matamos los telefonos y cualquier otro proceso restante
-    terminar_procesos();
+    // terminar_procesos();
 
     // Finalizamos Manager
     printf("\n[MANAGER] Terminacion del programa (todos los procesos terminados).\n");
@@ -107,16 +106,19 @@ void iniciar_tabla_procesos(int n_procesos_telefono, int n_procesos_linea)
 
 void crear_procesos(int numTelefonos, int numLineas)
 {
-    for (int i = 0; i < numTelefonos; i++)
+   /* for (int i = 0; i < numTelefonos; i++)
     {
         lanzar_proceso_telefono(i);
     }
-    printf("[MANAGER] %d teléfonos creadas.\n", numTelefonos);
+    printf("[MANAGER] %d teléfonos creadas.\n", numTelefonos);*/
     for (int i = 0; i < numLineas; i++)
     {
         lanzar_proceso_linea(i);
     }
     printf("[MANAGER] %d lineas creadas.\n", numLineas);
+    sleep(rand() % 10 + 10);
+    //signal_sem(get_sem(LINEAS));
+    signal_sem(get_sem(MUTEXESPERA));
 }
 
 void lanzar_proceso_telefono(const int indice_tabla)
@@ -182,10 +184,10 @@ void esperar_procesos()
             }
         }
     }
-    for (int i = 0; i < g_telefonosProcesses; i++)
+    /*for (int i = 0; i < g_telefonosProcesses; i++)
     {
         terminar_procesos_especificos(&g_process_telefonos_table[i], 0);
-    }
+    }*/
 }
 
 void terminar_procesos_especificos(struct TProcess_t *process_table, int process_num)
@@ -207,7 +209,7 @@ void terminar_procesos()
     {
         if (g_process_lineas_table[i].pid != 0)
         {
-            printf("[MANAGER] Terminando proceso %s [%d]...\n", g_process_lineas_table[i].clase, g_process_lineas_table[i].pid);
+            //printf("[MANAGER] Terminando proceso %s [%d]...\n", g_process_lineas_table[i].clase, g_process_lineas_table[i].pid);
             if (kill(g_process_lineas_table[i].pid, SIGINT) == -1)
             {
                 fprintf(stderr, "[MANAGER] Error al usar kill() en proceso %d: %s.\n", g_process_lineas_table[i].pid, strerror(errno));

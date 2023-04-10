@@ -29,7 +29,7 @@ int main(int argc,char *argv[]){
         printf("Teléfono [%d] en espera...\n",pid);
         
 
-        wait_sem(telefonos);
+       // wait_sem(telefonos);
 		//TODO: Aquí hay que realizar procesos
         int llamadasEspera= obtener_var(LLAMADASESPERA);
         sem_t *semaforo= get_sem(MUTEXESPERA);
@@ -38,13 +38,18 @@ int main(int argc,char *argv[]){
         // Mensaje de en conversacion
         int i= 0;
         consultar_var(llamadasEspera,&i);
+        if(i>0){
         modificar_var(llamadasEspera, --i);
         
         printf("Teléfono [%d] en conversacion... Nº Llamadas en espera: %d\n",pid,i);
-        signal_sem(semaforo); 
-        signal_sem(lineas);
+        
+       
         // Espera en conversación
         sleep(rand() % 10 + 10);
+        signal_sem(lineas);
+        }
+        else
+         signal_sem(semaforo); 
     }
 
     return EXIT_SUCCESS;

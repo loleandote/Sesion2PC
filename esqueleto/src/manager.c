@@ -106,7 +106,7 @@ void iniciar_tabla_procesos(int n_procesos_telefono, int n_procesos_linea)
 
 void crear_procesos(int numTelefonos, int numLineas)
 {
-   /* for (int i = 0; i < numTelefonos; i++)
+    /*for (int i = 0; i < numTelefonos; i++)
     {
         lanzar_proceso_telefono(i);
     }

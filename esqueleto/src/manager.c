@@ -32,9 +32,15 @@ struct TProcess_t *g_process_lineas_table;
 int main(int argc, char *argv[])
 {
     // Define variables locales
-    int numTelefonos=3;
-    int numLineas=10;
-
+    //int numTelefonos=3;
+    //int numLineas=10;
+    if(argc!=3){
+        printf("Error: Los argumentos pasados por el terminal son incorrectos\n");
+        printf("Ejemplo de ejecución: \n ./exec/manager <nTelefonos> <nLineas>\n");
+        exit(EXIT_FAILURE);
+    }
+    int numTelefonos=atoi(argv[1]);
+    int numLineas=atoi(argv[2]);
     // Procesa los argumentos y los guarda en las dos variables
     procesar_argumentos(argc, argv, &numTelefonos, &numLineas);
 
@@ -106,19 +112,17 @@ void iniciar_tabla_procesos(int n_procesos_telefono, int n_procesos_linea)
 
 void crear_procesos(int numTelefonos, int numLineas)
 {
-    /*for (int i = 0; i < numTelefonos; i++)
-    {
-        lanzar_proceso_telefono(i);
-    }
-    printf("[MANAGER] %d teléfonos creadas.\n", numTelefonos);*/
     for (int i = 0; i < numLineas; i++)
     {
         lanzar_proceso_linea(i);
     }
     printf("[MANAGER] %d lineas creadas.\n", numLineas);
+    for (int i = 0; i < numTelefonos; i++)
+    {
+        lanzar_proceso_telefono(i);
+    }
+    printf("[MANAGER] %d teléfonos creadas.\n", numTelefonos);
     sleep(rand() % 10 + 10);
-    //signal_sem(get_sem(LINEAS));
-    signal_sem(get_sem(MUTEXESPERA));
 }
 
 void lanzar_proceso_telefono(const int indice_tabla)
@@ -184,10 +188,10 @@ void esperar_procesos()
             }
         }
     }
-    /*for (int i = 0; i < g_telefonosProcesses; i++)
+    for (int i = 0; i < g_telefonosProcesses; i++)
     {
         terminar_procesos_especificos(&g_process_telefonos_table[i], 0);
-    }*/
+    }
 }
 
 void terminar_procesos_especificos(struct TProcess_t *process_table, int process_num)

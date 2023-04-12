@@ -22,16 +22,15 @@ int main(int argc,char *argv[]){
     printf("Linea [%d] esperando llamada...\n",pid);
 
     //Aumenta las llamadas en espera
-    //wait_sem(semaforo);
+    wait_sem(semaforo);
     int i=0;
     int valorEspera= obtener_var(LLAMADASESPERA);
     consultar_var(valorEspera,&i);
     modificar_var(valorEspera, ++i);
-   
+    signal_sem(semaforo);
 
     // Espera telefono libre
     printf("Linea [%d] esperando telefono libre...Nº Llamadas en espera: %d\n",pid,i);
-    //signal_sem(semaforo);
     sleep(rand() % 30 + 1);
     // Lanza la llamada
     signal_sem(telefonos);

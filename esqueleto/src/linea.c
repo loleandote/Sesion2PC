@@ -5,14 +5,21 @@
 #include <definitions.h>
 #include <memoriaI.h>
 #include <semaforoI.h>
-
+void telefono();
 int main(int argc,char *argv[]){
 
 	//TODO: Esquema especificado en la práctica.
-	pid_t pid = getpid();
+	telefono();
+   
+    
+    return EXIT_SUCCESS;
+}
+
+void telefono(){
+    pid_t pid = getpid();
     int valorEspera =  obtener_var (LLAMADASESPERA);
-    int i =0;
-    // Coge semáforos y memoria compartida
+     int i =0;
+        // Coge semáforos y memoria compartida
     sem_t *telefono= get_sem(TELEFONOS);
     sem_t  *mutex = get_sem(MUTEXESPERA);
     sem_t *linea = get_sem(LINEAS);
@@ -36,7 +43,4 @@ int main(int argc,char *argv[]){
     printf("Linea [%d] desviando llamada a un telefono...\n",pid);
 
     wait_sem(telefono);    
-    
-    
-    return EXIT_SUCCESS;
 }

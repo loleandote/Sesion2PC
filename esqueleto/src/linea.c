@@ -8,7 +8,7 @@
 void telefono();
 int main(int argc,char *argv[]){
 
-	//TODO: Esquema especificado en la práctica.
+	
 	telefono();
    
     

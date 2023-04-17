@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <memoriaI.h>
+
 #include <semaforoI.h>
 
 sem_t *crear_sem(const char *name, unsigned int valor)

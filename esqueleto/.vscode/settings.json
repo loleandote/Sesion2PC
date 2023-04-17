@@ -1,0 +1,12 @@
+{
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "stdlib.h": "c",
+        "unistd.h": "c",
+        "wait.h": "c",
+        "definitions.h": "c",
+        "memoriai.h": "c",
+        "signal.h": "c",
+        "semaforoi.h": "c"
+    }
+}

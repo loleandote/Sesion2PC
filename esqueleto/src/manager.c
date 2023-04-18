@@ -77,11 +77,20 @@ int main(int argc, char *argv[])
 } // end main
 //--------------------------------------------------------------------------------------
 
-// argc - nos indica la cantidad de argumentos que se han pasado
-//*argv - es donde se guardan dichos argumentos, ya que es un array
-//*numTelefonos - paramatro que utilizaremos para modificar la variable global g_telefonosProcesses
-//*numLineas - paramatro que utilizaremos para modificar la variable globalg_lineasProcesses = *numLineas;
-// por lo que el valor a donde esten apuntando estos punteros son los que tomaran dichas variables globales.
+/**
+ * La función establece variables globales para el número de procesos telefónicos y de línea en función
+ * de los argumentos de entrada.
+ *
+ * @param argc El número de argumentos pasados al programa desde la línea de comandos, incluido el
+ * nombre del propio programa.
+ * @param argv Una matriz de cadenas que contienen los argumentos de la línea de comando pasados al
+ * programa.
+ * @param numTelefonos Un puntero de número entero que se actualizará con el número de procesos
+ * telefónicos que se crearán en función de los argumentos de la línea de comandos pasados al programa.
+ * @param numLineas numLineas es un puntero a una variable entera que almacenará el número de líneas a
+ * procesar. La función procesar_argumentos toma este puntero como argumento y asigna el valor apuntado
+ * por numLineas a la variable global g_lineasProcesses.
+ */
 void procesar_argumentos(int argc, char *argv[], int *numTelefonos, int *numLineas)
 {
     g_telefonosProcesses = *numTelefonos;
@@ -314,4 +323,4 @@ void liberar_recursos()
     free(g_process_telefonos_table);
     free(g_process_lineas_table);
 } // end liberar_recursos
-//--------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------

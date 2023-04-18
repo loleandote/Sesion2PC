@@ -321,5 +321,9 @@ void liberar_recursos()
     // utilizmaos la funcion free para liberar la memoria que antes hemos asignado con malloc
     free(g_process_telefonos_table);
     free(g_process_lineas_table);
+    destruir_sem(TELEFONOS);
+    destruir_sem(LINEAS);
+    destruir_sem(MUTEXESPERA);
+    destruir_var(LLAMADASESPERA);
 } // end liberar_recursos
   //--------------------------------------------------------------------------------------------------

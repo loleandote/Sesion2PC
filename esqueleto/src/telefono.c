@@ -6,14 +6,12 @@
 #include <definitions.h>
 #include <memoriaI.h>
 #include <semaforoI.h>
-
+void telefono();
 // Modulo principal
 int main(int argc,char *argv[]){
-    
-
-	//TODO: Esquema según especificado en la práctica.
-    
-    // Define variables locales
+	telefono();
+}
+void telefono(){
     pid_t pid = getpid();
     int valorEspera =  obtener_var (LLAMADASESPERA);
     int i =0;
@@ -47,4 +45,3 @@ int main(int argc,char *argv[]){
     }
     return EXIT_SUCCESS;
 }
- 

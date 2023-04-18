@@ -5,17 +5,15 @@
 #include <definitions.h>
 #include <memoriaI.h>
 #include <semaforoI.h>
-void telefono();
+void linea();
 int main(int argc,char *argv[]){
 
 	
-	telefono();
-   
-    
+	linea();
     return EXIT_SUCCESS;
 }
 
-void telefono(){
+void linea(){
     pid_t pid = getpid();
     int valorEspera =  obtener_var (LLAMADASESPERA);
      int i =0;
@@ -37,7 +35,6 @@ void telefono(){
     printf("Linea [%d] esperando telefono libre...Nº Llamadas en espera: %d\n",pid,i);
     // Espera telefono libre
     signal_sem(linea);
-   // printf("quedo libre");
    
     // Lanza la llamada
     printf("Linea [%d] desviando llamada a un telefono...\n",pid);

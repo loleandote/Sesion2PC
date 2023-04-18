@@ -164,7 +164,6 @@ void crear_procesos(int numTelefonos, int numLineas)
         lanzar_proceso_linea(i);
     } // end for
     // realizamos una impresion con las lineas totales que han sido creados
-
 } // end crear_procesos
 //-------------------------------------------------------------------------------------------------
 
